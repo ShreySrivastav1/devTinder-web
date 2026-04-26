@@ -22,6 +22,10 @@ const Feed = () => {
     useEffect(() => {
         getFeed();
     },[])
+    if(feed.length <= 0) return <p className="flex justify-center font-bold text-3xl my-20">You are catched up!</p>
+
+
+
     return ( 
         feed && feed.length > 0 && 
         (<div className="flex justify-center my-5">

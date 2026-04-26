@@ -6,7 +6,17 @@ import { useEffect } from "react";
 
 const Requests = () => {
     const dispatch = useDispatch();
-    const requests = useSelector((store) => store.requests)
+    const requests = useSelector((store) => store.requests);
+
+    const reviewRequests = async(status,_id) => {
+        const res = await axios.post(BASE_URL + "/request/review/" + status + "/" + _id, {},{
+            withCredentials: true
+        });
+        // remove from UI
+        dispatch(addRequests(requests.filter(req => req._id !== _id)));
+
+
+    }
     const fetchRequests = async() => {
         try{
             const res = await axios.get(BASE_URL + "/user/requests/received", {
@@ -60,12 +70,19 @@ const Requests = () => {
 
             {/* RIGHT SIDE (buttons) */}
             <div className="flex gap-2">
-              <button className="btn btn-primary">Accept</button>
-              <button className="btn btn-secondary">Reject</button>
-
-            </div>
-          </div>
-        );
+                <button
+                className="btn btn-primary"
+                onClick={() => reviewRequests("accepted", req._id)}>
+                    Accept
+                    </button>
+                    <button
+                    className="btn btn-secondary"
+                    onClick={() => reviewRequests("rejected", req._id)}>
+                        Reject
+                        </button>
+                        </div>
+                        </div>
+                        );
       })}
     </div>
   )}

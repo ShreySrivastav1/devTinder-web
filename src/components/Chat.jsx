@@ -53,19 +53,22 @@ const Chat = () => {
         });
 
 
-        socket.on("messageReceived", ({firstName, text, userId}) => {
-            if (senderId === userId) return; // ignore my own message coming back
-            setMessages((messages) => [...messages,{firstName, text, userId}]);
+        socket.on("messageReceived", ({ firstName, text, userId: incomingUserId }) => {
+            if (incomingUserId === userId) return;
+            setMessages((messages) => [...messages,
+                { firstName, text, userId: incomingUserId },
+            ]);
         });
-
-
+        
         return () => {
             socket.disconnect();
         };
 
     },[userId , targetUserId]);
-
-   const sendMessage = () => {
+    
+    
+    const sendMessage = () => {
+        
     if (!newMessage.trim() || !socket) return;
 
     const messageData = {
@@ -74,7 +77,7 @@ const Chat = () => {
         targetUserId,
         text: newMessage,
     };
-    
+
     setMessages((messages) => [...messages, messageData]);
 
     socket.emit("sendMessage", messageData);

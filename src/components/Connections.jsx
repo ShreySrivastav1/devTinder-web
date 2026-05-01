@@ -3,6 +3,7 @@ import { BASE_URL } from "../utils/constants";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { addConnections } from "../utils/connectionSlice";
+import { Link } from "react-router-dom";
 
 const Connections = () => {
     const dispatch = useDispatch();
@@ -32,41 +33,39 @@ const Connections = () => {
             ) : (
                 <div className="flex flex-col gap-4 w-full max-w-2xl">
                     {connections.map((connection) => (
-    <div
-        key={connection._id}
-        className="flex items-center justify-between gap-4 p-4 bg-white shadow-md rounded-2xl"
-    >
-        <div className="flex items-center gap-4">
-            <img
-                src={connection.photoUrl || "https://via.placeholder.com/100"}
-                alt="profile"
-                className="w-16 h-16 rounded-full object-cover"
-            />
-
-            <div>
-                <h2 className="font-bold text-lg text-black">
-                    {connection.firstName} {connection.lastName}
-                </h2>
-
-                <p className="text-sm text-gray-600">
-                    {connection.about || "No bio available"}
-                </p>
-
-                <p className="text-sm text-blue-500">
-                    {connection.skills?.join(", ")}
-                </p>
-            </div>
-        </div>
-
-        <button className="btn btn-primary">
-            Chat
-        </button>
-    </div>
-))}
-                </div>
-            )}
-        </div>
-    );
-};
+                        <div
+                        key={connection._id}
+                        className="flex items-center justify-between gap-4 p-4 bg-white shadow-md rounded-2xl"
+                        >
+                            <div className="flex items-center gap-4">
+                                <img
+                                src={connection.photoUrl || "https://via.placeholder.com/100"}
+                                alt="profile"
+                                className="w-16 h-16 rounded-full object-cover"
+                                />
+                                <div>
+                                    <h2 className="font-bold text-lg text-black">
+                                        {connection.firstName} {connection.lastName}
+                                        </h2>
+                                        <p className="text-sm text-gray-600">
+                                            {connection.about || "No bio available"}
+                                            </p>
+                                            <p className="text-sm text-blue-500">
+                                                {connection.skills?.join(", ")}
+                                                </p>
+                                                </div>
+                                                </div>
+                                                <Link to={"/chat/" + connection._id}>
+                                                <button className="btn btn-primary">
+                                                    Chat
+                                                    </button>
+                                                    </Link>
+                                                    </div>
+                                                ))}
+                                                </div>
+                                            )}
+                                            </div>
+                                            );
+                                        };
 
 export default Connections;

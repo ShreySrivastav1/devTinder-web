@@ -77,7 +77,7 @@ const Requests = () => {
                     </button>
                     <button
                     className="btn btn-secondary"
-                    onClick={() => reviewRequests("rejected", req._id)}>
+                    onClick={() => reviewRequests("ignored", req._id)}>
                         Reject
                         </button>
                         </div>

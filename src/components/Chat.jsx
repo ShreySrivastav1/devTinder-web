@@ -64,18 +64,23 @@ const Chat = () => {
 
     },[userId , targetUserId]);
 
-    const sendMessage = () => {
-        if(!newMessage.trim()) return;
-        socket.emit("sendMessage", {
-            firstName: user.firstName,
-            userId,
-            targetUserId,
-            text: newMessage
-        });
-        
-        setNewMessage("");
+   const sendMessage = () => {
+    if (!newMessage.trim() || !socket) return;
+
+    const messageData = {
+        firstName: user.firstName,
+        userId,
+        targetUserId,
+        text: newMessage,
     };
 
+    // show instantly on your screen
+    setMessages((messages) => [...messages, messageData]);
+
+    socket.emit("sendMessage", messageData);
+
+    setNewMessage("");
+};
 
 
      return (

@@ -54,6 +54,7 @@ const Chat = () => {
 
 
         socket.on("messageReceived", ({firstName, text, userId}) => {
+            if (senderId === userId) return; // ignore my own message coming back
             setMessages((messages) => [...messages,{firstName, text, userId}]);
         });
 
@@ -73,6 +74,10 @@ const Chat = () => {
         targetUserId,
         text: newMessage,
     };
+    
+    setMessages((messages) => [...messages, messageData]);
+
+    socket.emit("sendMessage", messageData);
 
     setNewMessage("");
 };

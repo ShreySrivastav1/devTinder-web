@@ -74,11 +74,6 @@ const Chat = () => {
         text: newMessage,
     };
 
-    // show instantly on your screen
-    setMessages((messages) => [...messages, messageData]);
-
-    socket.emit("sendMessage", messageData);
-
     setNewMessage("");
 };
 
